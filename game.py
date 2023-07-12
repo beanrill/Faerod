@@ -30,7 +30,8 @@ def CYCLOPS():
 
 
 # CHARACTERS
-
+def MAGICIAN():
+    return
 
 # WEAPONS
 
