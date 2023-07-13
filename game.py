@@ -83,35 +83,41 @@ def board():
 
 def choose_char():
     """
-    Prompts user for their choice of character.
-    :return: Returns a string
+    Prompts user for their choice of character class.
+    :return: Returns a string holding the player's character class
     """
     while True:
-        choice = input("Pick your character: \n 1 - Wizard \n 2 - Mage \n 3 - Sorcerer \n 4 - Knight \n")
+        choice = int(input("\nChoose your class: \n 1 - Wizard \n 2 - Mage \n 3 - Sorcerer \n 4 - Knight \n"))
         if choice == 1:
             choice = "Wizard"
-            print(f"Welcome, {choice}! Get ready for an adventure.")
             break
         elif choice == 2:
             choice = "Mage"
-            print(f"Welcome, {choice}! Get ready for an adventure.")
             break
         elif choice == 3:
             choice = "Sorcerer"
-            print(f"Welcome, {choice}! Get ready for an adventure.")
             break
         elif choice == 4:
             choice = "Knight"
-            print(f"Welcome, {choice}! Get ready for an adventure.")
             break
-
     return choice
 
 
-def player(name, hp, character, location, ):
-    print('\033[96m' + f"\nName: {name} \n"
+def player(name, hp, char_class, weapon, location):
+    """
+
+    :param name: a string
+    :param hp: an integer
+    :param char_class: a string defining the player's character class
+    :param weapon: a string depicting the player's weapon
+    :param location: TBD
+    :return: Returns an f-string listing the player information
+    """
+    print('\033[96m' + "\nSUMMARY"
+                       f"\nName: {name} \n"
                        f"HP: {hp} \n"
-                       f"Character: {character} \n"
+                       f"Class: {char_class} \n"
+                       f"Weapon: {weapon} \n"
                        f"Location: {location} \n" + '\033[00m')
 
 # GAME MECHANICS
@@ -123,19 +129,33 @@ def introduction():
 
 
 def intro_narrative():
-    pass
+    # Breaking print statements up for the narrative so some time sleeps can be inserted later on.
+    print("You blink.")
+    print("Blinding rays strike your eyes as the sunshine peaks through the evergreen glades.")
+    print("You pull yourself up from the ground and take in your surroundings. A pair of scuttling rabbits pass on your "
+          "right, and above the chickadees sing across the canopy of trees.")
+    print("You turn to make your way down the trodden path back to your cottage and squint ahead.")
+    print("Silence. The rays of sun absolve into a tunnel of darkness and a strange cloud of "
+          "dense fog whispers your name. ")
+    print("As you approach, the fog morphs into a barrier with light streaming from within.")
+    print("You take a deep breath and step through......")
+
+
+def instructions():
+    print("You have entered the forrest of Fae")
 
 
 # RUN GAME
 
 
 def main():
-    # intro_art()
-    # introduction()
-    # # Narrative
-    # player_name = input("What would you like to be called? ")
-    # player(player_name, HP(), choose_char(), 5)
-    choose_char()
+    intro_art()
+    introduction()
+    intro_narrative()
+    player_name = input("\n What would you like to be called? ")
+    print(f"\nWelcome, {player_name}!")
+    player_char = choose_char()
+    player(player_name, HP(), player_char, None, None)
 
 
 if __name__ == "__main__":
