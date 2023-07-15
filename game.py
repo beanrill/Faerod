@@ -138,7 +138,7 @@ def intro_narrative():
     print("Silence. The rays of sun absolve into a tunnel of darkness and a strange cloud of "
           "dense fog whispers your name. ")
     print("As you approach, the fog morphs into a barrier with light streaming from within.")
-    print("You take a deep breath and step through......")
+    print("You take a deep breath and step through......\n")
 
 
 def instructions():
@@ -152,11 +152,11 @@ def instructions():
           "4) You may go in any direction you choose within the limitations of the board and can revisit the same spot"
           "more than once. If you land on a spot with a monster that you have previously fought, you may choose to "
           "fight it again. \n"
-          "5) When choosing how to proceed at any point, enter the numbers corresponding to the choices provided. \n")
+          "5) When choosing how to proceed at any point, enter the numbers corresponding to the choices provided.\n")
 
 
 def proceed_or_exit():
-    player_input = input("Type")
+    return int(input("Type 1 to proceed or 2 to exit: "))
 
 # RUN GAME
 
@@ -167,11 +167,18 @@ def main():
     introduction()
     intro_narrative()
     instructions()
-    # Player creation and statistics
-    player_name = input("\nWhat would you like to be called? ")
-    print(f"\nWelcome, {player_name}! Your adventure awaits in the land of Faerod..")
-    player_char = choose_char()
-    player(player_name, HP(), player_char, None, None)
+    proceed = proceed_or_exit()
+
+    # Gameplay
+    if proceed == 1:
+        # Player creation and statistics
+        player_name = input("\nWhat would you like to be called? ")
+        print(f"\nWelcome, {player_name}! Your adventure awaits in the land of Faerod..")
+        player_char = choose_char()
+        player(player_name, HP(), player_char, None, None)
+    else:
+        print("Thank you for playing! See you next time. ")
+
 
 
 if __name__ == "__main__":
