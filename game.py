@@ -155,32 +155,36 @@ def player(name, hp, char_class, weapon, location):
 
 
 def introduction():
-    print('\033[94m' + "Welcome to Faerod! A single-user dungeon game where you journey through a magical world filled "
+    print('\033[38;5;123m' + "Welcome to Faerod! A single-user dungeon game where you journey through a magical world filled "
                        "with beasts, treasure, and fairies. \n" + '\033[00m')
 
 
 def intro_narrative():
     # Breaking print statements up for the narrative so some time sleeps can be inserted later on.
-    print("You blink.")
+    print('\033[38;5;180m' + "You blink." + '\033[00m')
     time.sleep(1)
-    print("Blinding rays strike your eyes as the sunshine peaks through the evergreen glades.")
+    print('\033[38;5;180m' + "Blinding rays strike your eyes as the sunshine peaks through the evergreen glades."
+          + '\033[00m')
     time.sleep(1)
-    print("You pull yourself up from the ground and take in your surroundings. A pair of scuttling rabbits pass on your "
-          "right, and above the chickadees sing across the canopy of trees.")
+    print('\033[38;5;222m' +"You pull yourself up from the ground and take in your surroundings. A pair of scuttling rabbits "
+          "pass on your right, and above the chickadees sing across the canopy of trees." + '\033[00m')
     time.sleep(1.5)
-    print("You turn to make your way down the trodden path back to your cottage and squint ahead.")
+    print('\033[38;5;222m' + "You turn to make your way down the trodden path back to your cottage and squint ahead."
+          + '\033[00m')
     time.sleep(1.5)
-    print("Silence. The rays of sun absolve into a tunnel of darkness and a strange cloud of "
-          "dense fog whispers your name. ")
+    print('\033[38;5;179m' + "Silence. The rays of sun absolve into a tunnel of darkness and a strange cloud of "
+          "dense fog whispers your name. " + '\033[00m')
     time.sleep(2)
-    print("As you approach, the fog morphs into a barrier with light streaming from within.")
+    print('\033[38;5;179m' + "As you approach, the fog morphs into a barrier with light streaming from within."
+          + '\033[00m')
     time.sleep(2)
-    print("You take a deep breath and step through......\n")
+    print('\033[38;5;179m' + "You take a deep breath and step through......\n" + '\033[00m')
     time.sleep(2)
 
 
 def instructions():
-    print("You have entered the forrest of Faerod and are tasked with returning back to your realm\n")
+    print('\033[38;5;123m' + "You have entered the forrest of Faerod and are tasked with returning back to your realm\n"
+          + '\033[00m')
     print("Instructions: \n"
           "1) Choose your class based on the selections provided. Your class cannot be changed once chosen.\n"
           "2) Choose your weapon based on the selections provided. Your weapon cannot be changed after starting the "
