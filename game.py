@@ -206,6 +206,20 @@ def proceed_or_exit():
         except ValueError:
             print("Not a number! Please try again.")
 
+
+def reverse():
+    # May need to merge this function with proceed or exit
+    while True:
+        try:
+            player_choice = int(input("Select: "
+                                      "\033[38;5;40m 1 - Proceed \033[00m | "
+                                      "\033[38;5;184m 2 - Go Back \033[00m | "
+                                      "\033[38;5;196m 3 - Exit Game \033[00m \n"))
+            if player_choice == 1 or player_choice == 2 or player_choice == 3:
+                return player_choice
+        except ValueError:
+            print("Not a number! Please try again")
+
 # RUN GAME
 
 
@@ -216,6 +230,7 @@ def main():
     intro_narrative()
     instructions()
     proceed = proceed_or_exit()
+    # choose_reverse = reverse()
 
     # Gameplay
     if proceed == 1:
@@ -224,6 +239,7 @@ def main():
         print(f"\nWelcome, {player_name}! Your adventure awaits in the land of Faerod..")
         player_char = choose_char()
         player(player_name, HP(), player_char, None, None)
+        reverse()
     else:
         print("Thank you for playing! See you next time. ")
 
