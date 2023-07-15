@@ -142,18 +142,34 @@ def intro_narrative():
 
 
 def instructions():
-    print("You have entered the forrest of Fae")
+    print("You have entered the forrest of Faerod and are tasked with returning back to your realm")
+    print("Instructions: \n"
+          "1) Choose your class based on the selections provided. Your class cannot be changed once chosen.\n"
+          "2) Choose your weapon based on the selections provided. Your weapon cannot be changed after starting the game"
+          "unless you discover a weapon during gameplay, in which case you have a choice to swap it with your current"
+          "weapon or not. \n"
+          "3) Your HP level starts at 30 and can increase or decrease as you progress through the game. \n"
+          "4) You may go in any direction you choose within the limitations of the board and can revisit the same spot"
+          "more than once. If you land on a spot with a monster that you have previously fought, you may choose to "
+          "fight it again. \n"
+          "5) When choosing how to proceed at any point, enter the numbers corresponding to the choices provided. \n")
 
+
+def proceed_or_exit():
+    player_input = input("Type")
 
 # RUN GAME
 
 
 def main():
+    # Introduction and instructions
     intro_art()
     introduction()
     intro_narrative()
-    player_name = input("\n What would you like to be called? ")
-    print(f"\nWelcome, {player_name}!")
+    instructions()
+    # Player creation and statistics
+    player_name = input("\nWhat would you like to be called? ")
+    print(f"\nWelcome, {player_name}! Your adventure awaits in the land of Faerod..")
     player_char = choose_char()
     player(player_name, HP(), player_char, None, None)
 
