@@ -1,3 +1,4 @@
+import time
 
 # CONSTANTS
 
@@ -131,32 +132,45 @@ def introduction():
 def intro_narrative():
     # Breaking print statements up for the narrative so some time sleeps can be inserted later on.
     print("You blink.")
+    time.sleep(1)
     print("Blinding rays strike your eyes as the sunshine peaks through the evergreen glades.")
+    time.sleep(1)
     print("You pull yourself up from the ground and take in your surroundings. A pair of scuttling rabbits pass on your "
           "right, and above the chickadees sing across the canopy of trees.")
+    time.sleep(1.5)
     print("You turn to make your way down the trodden path back to your cottage and squint ahead.")
+    time.sleep(1.5)
     print("Silence. The rays of sun absolve into a tunnel of darkness and a strange cloud of "
           "dense fog whispers your name. ")
+    time.sleep(2)
     print("As you approach, the fog morphs into a barrier with light streaming from within.")
+    time.sleep(2)
     print("You take a deep breath and step through......\n")
+    time.sleep(2)
 
 
 def instructions():
-    print("You have entered the forrest of Faerod and are tasked with returning back to your realm")
+    print("You have entered the forrest of Faerod and are tasked with returning back to your realm\n")
     print("Instructions: \n"
           "1) Choose your class based on the selections provided. Your class cannot be changed once chosen.\n"
-          "2) Choose your weapon based on the selections provided. Your weapon cannot be changed after starting the game"
-          "unless you discover a weapon during gameplay, in which case you have a choice to swap it with your current"
-          "weapon or not. \n"
+          "2) Choose your weapon based on the selections provided. Your weapon cannot be changed after starting the "
+          "game, unless you discover a weapon during gameplay, in which case you have a choice to swap it with your "
+          "current weapon or not. \n"
           "3) Your HP level starts at 30 and can increase or decrease as you progress through the game. \n"
-          "4) You may go in any direction you choose within the limitations of the board and can revisit the same spot"
+          "4) You may go in any direction you choose within the limitations of the board and can revisit the same spot "
           "more than once. If you land on a spot with a monster that you have previously fought, you may choose to "
           "fight it again. \n"
           "5) When choosing how to proceed at any point, enter the numbers corresponding to the choices provided.\n")
 
 
 def proceed_or_exit():
-    return int(input("Type 1 to proceed or 2 to exit: "))
+    while True:
+        try:
+            start_stop = int(input("Type 1 to proceed or 2 to exit: "))
+            if start_stop == 1 or start_stop == 2:
+                return start_stop
+        except ValueError:
+            print("Not a number! Please try again.")
 
 # RUN GAME
 
@@ -172,7 +186,7 @@ def main():
     # Gameplay
     if proceed == 1:
         # Player creation and statistics
-        player_name = input("\nWhat would you like to be called? ")
+        player_name = input("\nWhat would you like to be called oh adventurer? ")
         print(f"\nWelcome, {player_name}! Your adventure awaits in the land of Faerod..")
         player_char = choose_char()
         player(player_name, HP(), player_char, None, None)
