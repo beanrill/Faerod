@@ -212,8 +212,8 @@ def reverse():
     while True:
         try:
             player_choice = int(input("Select: "
-                                      "\033[38;5;40m 1 - Proceed \033[00m | "
-                                      "\033[38;5;184m 2 - Go Back \033[00m | "
+                                      "\033[38;5;40m 1 - Next \033[00m | "
+                                      "\033[38;5;184m 2 - Back \033[00m | "
                                       "\033[38;5;196m 3 - Exit Game \033[00m \n"))
             if player_choice == 1 or player_choice == 2 or player_choice == 3:
                 return player_choice
