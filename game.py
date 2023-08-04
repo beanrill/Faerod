@@ -72,6 +72,9 @@ def HYDRA():
 def CHIMERA():
     return 20
 
+def BANSHEE():
+    return 20
+
 def CYCLOPS():
     return 25
 
@@ -82,6 +85,9 @@ def HYDRA_HIT():
     return 10
 
 def CHIMERA_HIT():
+    return 6
+
+def BANSHEE_HIT():
     return 6
 
 def CYCLOPS_HIT():
@@ -246,7 +252,7 @@ def monster_generator(number):
     if number == 4:
         print("Cyclops")
     if number == 5:
-        print("Fifth monster")
+        print("Banshee")
 
 
 # ------------------------------------------------- MICROSERVICE -------------------------------------------------- #
