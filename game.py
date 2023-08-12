@@ -1,4 +1,5 @@
 import time
+import random
 
 # ------------------------------------------------- ASCII ART ------------------------------------------------- #
 
@@ -241,8 +242,67 @@ def print_monster(monster):
     """
     print(f"Prepare to fight a\033[38;5;196m {monster['Monster']} \033[00m \n")
 
-def combat(character, monster):
-    pass
+
+def attack():
+    """
+    Determines who attacks who.
+
+    :return: a boolean
+    """
+    player_roll = random.randint(1, 25)
+    monster_roll = random.randint(1, 25)
+    while True:
+        if player_roll > monster_roll:
+            print(f"Player rolls: {player_roll} | Monster rolls: {monster_roll}")
+            return True
+        else:
+            print(f"Player rolls: {player_roll} | Monster rolls: {monster_roll}")
+            return False
+
+def check_combat_winner(player_hp, monster_hp):
+    """
+    Checks if player or monster won the combat.
+
+    :param player_hp: an integer
+    :param monster_hp: an integer
+    :return: a print statement or none
+    """
+    if player_hp <= 0:
+        # Game over
+        print("Game over, you have been vanquished!")
+    elif monster_hp <= 0:
+        print("Congratulations! You have defeated the monster!")
+    else:
+        return
+
+
+def combat(player, monster):
+    """
+    Combat between player and monster
+
+    :param player: a dictionary
+    :param monster: a dictionary
+    :return: none
+    """
+    player_hp = player['HP']
+    monster_hp = monster['HP']
+    player_name = player['Name']
+    monster_name = monster['Monster']
+
+    print(f"{player_name} fights the {monster_name}! \n")
+
+    while player_hp > 0 and monster_hp > 0:
+        if attack(): # Player hits monster
+            print(f"{player_name} strikes the {monster_name}! \n")
+            monster_hp -= 5
+        else:
+            print(f"{monster_name} attacks {player_name}! \n")
+            player_hp -= 7
+
+        print(f"{player['Name']}: {player_hp} | {monster['Monster']}: {monster_hp} \n")
+
+        # Check if player or monster died
+        check_combat_winner(player_hp, monster_hp)
 
 def validate_choice():
     """
@@ -345,8 +405,9 @@ def run_microservice():
 def main():
 
     # Testing Monster Generator
-    # random_number = run_microservice()
-    # monster = monster_generator(random_number)
+    random_number = run_microservice()
+    monster = monster_generator(random_number)
+
     # Call monster and print what it is
     # print_monster(monster)
 
@@ -357,13 +418,14 @@ def main():
     # instructions()
     proceed = proceed_or_exit()
     new_player = create_player()
-    # choose_reverse = reverse()
-
+    # # choose_reverse = reverse()
+    #
     # Gameplay
     if proceed == 1:
         # Player creation and statistics
         print_player(new_player)
         # print(new_player)
+        combat(new_player, monster)
         reverse()
     else:
         print("Thank you for playing! See you next time. ")
