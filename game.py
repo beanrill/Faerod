@@ -105,13 +105,13 @@ def choose_char():
     """
     while True:
         choice = int(input("\nChoose your class: \n 1 - Wizard \n 2 - Mage \n 3 - Sorcerer \n 4 - Knight \n"))
-        if choice == 1:
+        if choice == 1 and validate_choice():
             return "Wizard"
-        elif choice == 2:
+        elif choice == 2 and validate_choice():
             return "Mage"
-        elif choice == 3:
+        elif choice == 3 and validate_choice():
             return "Sorcerer"
-        elif choice == 4:
+        elif choice == 4 and validate_choice():
             return "Knight"
 
 def choose_weapon():
@@ -121,13 +121,13 @@ def choose_weapon():
     """
     while True:
         choice = int(input("\nChoose your weapon: \n 1 - Sword \n 2 - Crossbow \n 3 - Machete \n 4 - Frying Pan \n"))
-        if choice == 1:
+        if choice == 1 and validate_choice():
             return "Sword"
-        elif choice == 2:
+        elif choice == 2 and validate_choice():
             return "Crossbow"
-        elif choice == 3:
+        elif choice == 3 and validate_choice():
             return "Machete"
-        elif choice == 4:
+        elif choice == 4 and validate_choice():
             return "Frying Pan"
 
 def player(name, hp, char_class, weapon):
@@ -223,6 +223,12 @@ def monster_generator(number):
     if number == 5:
         print("Prepare to fight a\033[38;5;165m BANSHEE \033[00m \n")
 
+def validate_choice():
+    choice = int(input("\033[38;5;193m Are you sure? 1 - Yes | 2 - No \033[00m \n"))
+    if choice == 1:
+        return True
+    else:
+        return False
 
 def proceed_or_exit():
     while True:
