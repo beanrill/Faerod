@@ -133,7 +133,7 @@ def choose_weapon():
         elif choice == 4 and validate_choice():
             return "Frying Pan"
 
-def player(name, hp, char_class, weapon):
+def player(name, hp, char_class, weapon, location):
     """
     Assigns player name, hp, class, and weapon into a dictionary.
 
@@ -143,7 +143,7 @@ def player(name, hp, char_class, weapon):
     :param weapon: a string depicting the player's weapon
     :return: Returns a dictionary
     """
-    return {"Name": name, "HP": hp, "Class": char_class, "Weapon": weapon}
+    return {"Name": name, "HP": hp, "Class": char_class, "Weapon": weapon, "Location": location}
 
 
 # ------------------------------------------------- GAME MECHANICS -------------------------------------------------- #
@@ -197,7 +197,7 @@ def create_player():
     print(f"\nWelcome, {player_name}! Your adventure awaits in the land of Faerod...")
     player_class = choose_char()
     weapon = choose_weapon()
-    created_player = player(player_name, HP(), player_class, weapon)
+    created_player = player(player_name, HP(), player_class, weapon, 0)
     return created_player
 
 def print_player(character: dict):
@@ -275,18 +275,32 @@ def check_combat_winner(player_hp, monster_hp):
     else:
         return
 
+def combat_stats(curr_player, curr_hp):
+    """
+    Checks the combat stats of the player and prints updated summary.
 
-def combat(player, monster):
+    :param curr_player: a dict of the player
+    :param curr_hp: an int
+    :return: none
+    """
+    if curr_hp < 0:
+        curr_player['HP'] = 0
+    else:
+        curr_player['HP'] = curr_hp
+    print_player(curr_player)
+
+
+def combat(curr_player, monster):
     """
     Combat between player and monster
 
-    :param player: a dictionary
+    :param curr_player: a dictionary
     :param monster: a dictionary
     :return: none
     """
-    player_hp = player['HP']
+    player_hp = curr_player['HP']
     monster_hp = monster['HP']
-    player_name = player['Name']
+    player_name = curr_player['Name']
     monster_name = monster['Monster']
 
     print(f"{player_name} fights the {monster_name}! \n")
@@ -299,10 +313,13 @@ def combat(player, monster):
             print(f"{monster_name} attacks {player_name}! \n")
             player_hp -= 7
 
-        print(f"{player['Name']}: {player_hp} | {monster['Monster']}: {monster_hp} \n")
+        print(f"{curr_player['Name']}: {player_hp} | {monster['Monster']}: {monster_hp} \n")
 
         # Check if player or monster died
         check_combat_winner(player_hp, monster_hp)
+
+    # Print updated stats of player
+    combat_stats(curr_player, player_hp)
 
 def validate_choice():
     """
@@ -317,6 +334,11 @@ def validate_choice():
         return False
 
 def proceed_or_exit():
+    """
+    Proceed or exit the game. Use only at start of game.
+
+    :return: returns int
+    """
     while True:
         try:
             start_stop = int(input("Type 1 to proceed or 2 to exit: "))
@@ -326,7 +348,11 @@ def proceed_or_exit():
             print("Not a number! Please try again.")
 
 def reverse():
-    # May need to merge this function with proceed or exit
+    """
+    Navigates player throughout the game.
+
+    :return: returns int
+    """
     while True:
         try:
             player_choice = int(input("Select: "
@@ -341,6 +367,8 @@ def reverse():
         except ValueError:
             print("Not a number! Please try again")
 
+def end_game():
+    return "Thank you for playing! See you next time."
 
 # ------------------------------------------------- MICROSERVICE -------------------------------------------------- #
 
@@ -386,7 +414,7 @@ def run_microservice():
 
     while (check_txt_file_contents("rng_pipe.txt", "request") or
            check_txt_file_contents("rng_pipe.txt", "")):
-        print("Waiting 1 second before checking the pipe...")
+        # print("Waiting 1 second before checking the pipe...")
         time.sleep(1)
 
     pipe_contents = read_from_txt_file("rng_pipe.txt")
@@ -400,10 +428,10 @@ def run_microservice():
     return rng_num
 
 # ------------------------------------------------- RUN GAME ------------------------------------------------- #
-
+def game():
+    pass
 
 def main():
-
     # Testing Monster Generator
     random_number = run_microservice()
     monster = monster_generator(random_number)
@@ -426,7 +454,7 @@ def main():
         print_player(new_player)
         # print(new_player)
         combat(new_player, monster)
-        reverse()
+        # reverse()
     else:
         print("Thank you for playing! See you next time. ")
 
