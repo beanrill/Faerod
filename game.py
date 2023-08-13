@@ -210,7 +210,7 @@ def movement(player_dict, monster_dict):
     :param monster_dict: a dict representing the monster name and HP see monster_generator()
     :return: none
     """
-    number = int(input("Which square would you like to go to? (1 - 9)\n "))
+    number = int(input("Which square would you like to go to? (Pick 1 - 9)\n"))
     monsters = [3, 5, 7, 9]
     # Squares are either fight monster or increase HP
     if number in monsters:
@@ -274,28 +274,8 @@ def proceed_or_exit():
         except ValueError:
             print("Not a number! Please try again.")
 
-# def reverse():
-#     """
-#     Navigates player throughout the game.
-#
-#     :return: returns int
-#     """
-#     while True:
-#         try:
-#             player_choice = int(input("Select: "
-#                                       "\033[38;5;40m 1 - Next \033[00m | "
-#                                       "\033[38;5;184m 2 - Back \033[00m | "
-#                                       "\033[38;5;196m 3 - Exit Game \033[00m \n"))
-#             if player_choice == 1 or player_choice == 2:
-#                 return player_choice
-#             if player_choice == 3:
-#                 print("Thanks for playing! See you next time.")
-#                 break
-#         except ValueError:
-#             print("Not a number! Please try again")
-#
 def end_game():
-    print("Thank you for playing! See you next time.")
+    print("\033[38;5;183mThank you for playing! See you next time.\033[00m")
 
 # ------------------------------------------------- COMBAT -------------------------------------------------- #
 
@@ -363,14 +343,15 @@ def combat(curr_player, monster):
     player_name = curr_player['Name']
     monster_name = monster['Monster']
 
-    print(f"{player_name} fights the {monster_name}! \n")
+    print("\n\033[38;5;43mBEGIN COMBAT\033[00m \n")
+    print(f"\033[38;5;155m{player_name}\033[00m fights the \033[38;5;160m{monster_name}!\033[00m \n")
 
     while player_hp > 0 and monster_hp > 0:
         if attack(): # Player hits monster
-            print(f"{player_name} strikes the {monster_name}! \n")
+            print(f"\033[38;5;155m{player_name} strikes the {monster_name}!\033[00m \n")
             monster_hp -= 5
         else:
-            print(f"{monster_name} attacks {player_name}! \n")
+            print(f"\033[38;5;196m{monster_name} attacks {player_name}!\033[00m \n")
             player_hp -= 7
 
         print(f"{curr_player['Name']}: {player_hp} | {monster['Monster']}: {monster_hp} \n")
@@ -440,14 +421,13 @@ def run_microservice():
 
 # ------------------------------------------------- RUN GAME ------------------------------------------------- #
 def main():
-
-
     # Introduction and instructions
     # intro_art()
     # introduction()
     # intro_narrative()
     # instructions()
 
+    # Run Game
     if proceed_or_exit() == 2:
         end_game()
     else:
