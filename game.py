@@ -79,21 +79,6 @@ def BANSHEE():
 def CYCLOPS():
     return 25
 
-# def MINOTAUR_HIT():
-#     return 5
-#
-# def HYDRA_HIT():
-#     return 10
-#
-# def CHIMERA_HIT():
-#     return 6
-#
-# def BANSHEE_HIT():
-#     return 6
-#
-# def CYCLOPS_HIT():
-#     return 8
-
 # ------------------------------------------------- SETUP ------------------------------------------------- #
 
 def HP():
@@ -217,6 +202,24 @@ def instructions():
           "more than once. If you land on a spot with a monster that you have previously fought, you may choose to "
           "fight it again. \n"
           "5) When choosing how to proceed at any point, enter the numbers corresponding to the choices provided.\n")
+def movement(player_dict, monster_dict):
+    """
+    Movement of player across the board. Selection of number between 1-9 to either fight monster or earn HP increase.
+
+    :param player_dict: a dict representing the player's stats, see player()
+    :param monster_dict: a dict representing the monster name and HP see monster_generator()
+    :return: none
+    """
+    number = int(input("Which square would you like to go to? (1 - 9)\n "))
+    monsters = [3, 5, 7, 9]
+    # Squares are either fight monster or increase HP
+    if number in monsters:
+        player_dict['Location'] = number
+        combat(player_dict, monster_dict)
+    else:
+        player_dict['Location'] = number
+        player_dict['HP'] += 10
+        print(player_dict)
 
 def monster_generator(number):
     """
@@ -271,28 +274,28 @@ def proceed_or_exit():
         except ValueError:
             print("Not a number! Please try again.")
 
-def reverse():
-    """
-    Navigates player throughout the game.
-
-    :return: returns int
-    """
-    while True:
-        try:
-            player_choice = int(input("Select: "
-                                      "\033[38;5;40m 1 - Next \033[00m | "
-                                      "\033[38;5;184m 2 - Back \033[00m | "
-                                      "\033[38;5;196m 3 - Exit Game \033[00m \n"))
-            if player_choice == 1 or player_choice == 2:
-                return player_choice
-            if player_choice == 3:
-                print("Thanks for playing! See you next time.")
-                break
-        except ValueError:
-            print("Not a number! Please try again")
-
+# def reverse():
+#     """
+#     Navigates player throughout the game.
+#
+#     :return: returns int
+#     """
+#     while True:
+#         try:
+#             player_choice = int(input("Select: "
+#                                       "\033[38;5;40m 1 - Next \033[00m | "
+#                                       "\033[38;5;184m 2 - Back \033[00m | "
+#                                       "\033[38;5;196m 3 - Exit Game \033[00m \n"))
+#             if player_choice == 1 or player_choice == 2:
+#                 return player_choice
+#             if player_choice == 3:
+#                 print("Thanks for playing! See you next time.")
+#                 break
+#         except ValueError:
+#             print("Not a number! Please try again")
+#
 def end_game():
-    return "Thank you for playing! See you next time."
+    print("Thank you for playing! See you next time.")
 
 # ------------------------------------------------- COMBAT -------------------------------------------------- #
 
@@ -313,17 +316,20 @@ def attack():
             print(f"Player rolls: {player_roll} | Monster rolls: {monster_roll}")
             return False
 
-def check_combat_winner(player_hp, monster_hp):
+def check_combat_winner(curr_player, player_hp, monster_hp):
     """
     Checks if player or monster won the combat.
 
+    :param curr_player: a dictionary representing the current player's stats
     :param player_hp: an integer
     :param monster_hp: an integer
     :return: a print statement or none
     """
     if player_hp <= 0:
         # Game over
+        curr_player['Status'] = "Dead"
         print("Game over, you have been vanquished!")
+        end_game()
     elif monster_hp <= 0:
         print("Congratulations! You have defeated the monster!")
     else:
@@ -370,7 +376,7 @@ def combat(curr_player, monster):
         print(f"{curr_player['Name']}: {player_hp} | {monster['Monster']}: {monster_hp} \n")
 
         # Check if player or monster died
-        check_combat_winner(player_hp, monster_hp)
+        check_combat_winner(curr_player, player_hp, monster_hp)
 
     # Print updated stats of player
     combat_stats(curr_player, player_hp)
@@ -433,35 +439,28 @@ def run_microservice():
     return rng_num
 
 # ------------------------------------------------- RUN GAME ------------------------------------------------- #
-def game():
-    pass
-
 def main():
-    # Testing Monster Generator
-    # random_number = run_microservice()
-    # monster = monster_generator(random_number)
-
-    # Call monster and print what it is
-    # print_monster(monster)
+    # Generate Monster
+    random_number = run_microservice()
+    monster = monster_generator(random_number)
 
     # Introduction and instructions
-    # intro_art()
-    # introduction()
-    # intro_narrative()
-    # instructions()
-    proceed = proceed_or_exit()
-    new_player = create_player()
-    # # choose_reverse = reverse()
-    #
-    # Gameplay
-    if proceed == 1:
-        # Player creation and statistics
-        print_player(new_player)
-        # print(new_player)
-        # combat(new_player, monster)
-        # reverse()
+    intro_art()
+    introduction()
+    intro_narrative()
+    instructions()
+
+    if proceed_or_exit() == 2:
+        end_game()
     else:
-        print("Thank you for playing! See you next time. ")
+        new_player = create_player()
+        print_player(new_player)
+        while new_player['Status'] == "Alive":
+            if proceed_or_exit() == 1:
+                movement(new_player, monster)
+            else:
+                end_game()
+                break
 
 
 if __name__ == "__main__":
