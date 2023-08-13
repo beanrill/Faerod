@@ -440,15 +440,13 @@ def run_microservice():
 
 # ------------------------------------------------- RUN GAME ------------------------------------------------- #
 def main():
-    # Generate Monster
-    random_number = run_microservice()
-    monster = monster_generator(random_number)
+
 
     # Introduction and instructions
-    intro_art()
-    introduction()
-    intro_narrative()
-    instructions()
+    # intro_art()
+    # introduction()
+    # intro_narrative()
+    # instructions()
 
     if proceed_or_exit() == 2:
         end_game()
@@ -457,6 +455,9 @@ def main():
         print_player(new_player)
         while new_player['Status'] == "Alive":
             if proceed_or_exit() == 1:
+                # Start microservice
+                random_number = run_microservice()
+                monster = monster_generator(random_number)
                 movement(new_player, monster)
             else:
                 end_game()
