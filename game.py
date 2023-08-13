@@ -195,13 +195,13 @@ def instructions():
     print("Instructions: \n"
           "1) Choose your class based on the selections provided. Your class cannot be changed once chosen.\n"
           "2) Choose your weapon based on the selections provided. Your weapon cannot be changed after starting the "
-          "game, unless you discover a weapon during gameplay, in which case you have a choice to swap it with your "
-          "current weapon or not. \n"
-          "3) Your HP level starts at 30 and can increase or decrease as you progress through the game. \n"
-          "4) You may go in any direction you choose within the limitations of the board and can revisit the same spot "
+          "game \n"
+          "3) Your HP level starts at 50 and can increase or decrease as you progress through the game. \n"
+          "4) The board is split into 9 squares, each round will prompt you to choose between squares 1-9."
+          "5) You may go in any direction you choose within the limitations of the board and can revisit the same spot. "
           "more than once. If you land on a spot with a monster that you have previously fought, you may choose to "
-          "fight it again. \n"
-          "5) When choosing how to proceed at any point, enter the numbers corresponding to the choices provided.\n")
+          "fight it again.\n"
+          "6) When choosing how to proceed at any point, enter the numbers corresponding to the choices provided.\n")
 def movement(player_dict, monster_dict):
     """
     Movement of player across the board. Selection of number between 1-9 to either fight monster or earn HP increase.
