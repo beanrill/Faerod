@@ -79,20 +79,20 @@ def BANSHEE():
 def CYCLOPS():
     return 25
 
-def MINOTAUR_HIT():
-    return 5
-
-def HYDRA_HIT():
-    return 10
-
-def CHIMERA_HIT():
-    return 6
-
-def BANSHEE_HIT():
-    return 6
-
-def CYCLOPS_HIT():
-    return 8
+# def MINOTAUR_HIT():
+#     return 5
+#
+# def HYDRA_HIT():
+#     return 10
+#
+# def CHIMERA_HIT():
+#     return 6
+#
+# def BANSHEE_HIT():
+#     return 6
+#
+# def CYCLOPS_HIT():
+#     return 8
 
 # ------------------------------------------------- SETUP ------------------------------------------------- #
 
@@ -133,19 +133,50 @@ def choose_weapon():
         elif choice == 4 and validate_choice():
             return "Frying Pan"
 
-def player(name, hp, char_class, weapon, location):
+def player(name, hp, char_class, weapon, location, status):
     """
-    Assigns player name, hp, class, and weapon into a dictionary.
+    Assigns player name, hp, class, weapon, location, and status into a dictionary.
 
     :param name: a string
     :param hp: an integer
     :param char_class: a string defining the player's character class
     :param weapon: a string depicting the player's weapon
+    :param location: a string
+    :param status: a string
     :return: Returns a dictionary
     """
-    return {"Name": name, "HP": hp, "Class": char_class, "Weapon": weapon, "Location": location}
+    return {"Name": name, "HP": hp, "Class": char_class, "Weapon": weapon, "Location": location, "Status": status}
 
 
+def create_player():
+    """
+    Creates a player with class and weapon choices.
+
+    :return: Returns the dictionary of the final created player
+    """
+    player_name = input("\nWhat would you like to be called oh adventurer? ")
+    print(f"\nWelcome, {player_name}! Your adventure awaits in the land of Faerod...")
+    player_class = choose_char()
+    weapon = choose_weapon()
+    created_player = player(player_name, HP(), player_class, weapon, 0, "Alive")
+    return created_player
+
+
+def print_player(character: dict):
+    """
+    Prints the current player's stats
+
+    :param character: a dictionary
+    :return: A string of the player's stats/profile
+    """
+
+    print('\033[96m' + "\nSUMMARY"
+                       f"\nName: {character['Name']} \n"
+                       f"HP: {character['HP']} \n"
+                       f"Class: {character['Class']} \n"
+                       f"Weapon: {character['Weapon']} \n"
+                       f"Location: {character['Location']} \n"
+                       f"Status: {character['Status']} \n" + '\033[00m')
 # ------------------------------------------------- GAME MECHANICS -------------------------------------------------- #
 
 def introduction():
@@ -187,34 +218,6 @@ def instructions():
           "fight it again. \n"
           "5) When choosing how to proceed at any point, enter the numbers corresponding to the choices provided.\n")
 
-def create_player():
-    """
-    Creates a player with class and weapon choices.
-
-    :return: Returns the dictionary of the final created player
-    """
-    player_name = input("\nWhat would you like to be called oh adventurer? ")
-    print(f"\nWelcome, {player_name}! Your adventure awaits in the land of Faerod...")
-    player_class = choose_char()
-    weapon = choose_weapon()
-    created_player = player(player_name, HP(), player_class, weapon, 0)
-    return created_player
-
-def print_player(character: dict):
-    """
-    Prints the current player's stats
-
-    :param character: a dictionary
-    :return: A string of the player's stats/profile
-    """
-
-    print('\033[96m' + "\nSUMMARY"
-                       f"\nName: {character['Name']} \n"
-                       f"HP: {character['HP']} \n"
-                       f"Class: {character['Class']} \n"
-                       f"Weapon: {character['Weapon']} \n" + '\033[00m')
-
-
 def monster_generator(number):
     """
     Generate a monster.
@@ -241,6 +244,57 @@ def print_monster(monster):
     :return: none
     """
     print(f"Prepare to fight a\033[38;5;196m {monster['Monster']} \033[00m \n")
+
+def validate_choice():
+    """
+    Validates player's choice.
+
+    :return: a boolean
+    """
+    choice = int(input("\033[38;5;193m Are you sure? 1 - Yes | 2 - No \033[00m \n"))
+    if choice == 1:
+        return True
+    else:
+        return False
+
+def proceed_or_exit():
+    """
+    Proceed or exit the game. Use only at start of game.
+
+    :return: returns int
+    """
+    while True:
+        try:
+            start_stop = int(input("Type 1 to proceed or 2 to exit: "))
+            if start_stop == 1 or start_stop == 2:
+                return start_stop
+        except ValueError:
+            print("Not a number! Please try again.")
+
+def reverse():
+    """
+    Navigates player throughout the game.
+
+    :return: returns int
+    """
+    while True:
+        try:
+            player_choice = int(input("Select: "
+                                      "\033[38;5;40m 1 - Next \033[00m | "
+                                      "\033[38;5;184m 2 - Back \033[00m | "
+                                      "\033[38;5;196m 3 - Exit Game \033[00m \n"))
+            if player_choice == 1 or player_choice == 2:
+                return player_choice
+            if player_choice == 3:
+                print("Thanks for playing! See you next time.")
+                break
+        except ValueError:
+            print("Not a number! Please try again")
+
+def end_game():
+    return "Thank you for playing! See you next time."
+
+# ------------------------------------------------- COMBAT -------------------------------------------------- #
 
 
 def attack():
@@ -321,55 +375,6 @@ def combat(curr_player, monster):
     # Print updated stats of player
     combat_stats(curr_player, player_hp)
 
-def validate_choice():
-    """
-    Validates player's choice.
-
-    :return: a boolean
-    """
-    choice = int(input("\033[38;5;193m Are you sure? 1 - Yes | 2 - No \033[00m \n"))
-    if choice == 1:
-        return True
-    else:
-        return False
-
-def proceed_or_exit():
-    """
-    Proceed or exit the game. Use only at start of game.
-
-    :return: returns int
-    """
-    while True:
-        try:
-            start_stop = int(input("Type 1 to proceed or 2 to exit: "))
-            if start_stop == 1 or start_stop == 2:
-                return start_stop
-        except ValueError:
-            print("Not a number! Please try again.")
-
-def reverse():
-    """
-    Navigates player throughout the game.
-
-    :return: returns int
-    """
-    while True:
-        try:
-            player_choice = int(input("Select: "
-                                      "\033[38;5;40m 1 - Next \033[00m | "
-                                      "\033[38;5;184m 2 - Back \033[00m | "
-                                      "\033[38;5;196m 3 - Exit Game \033[00m \n"))
-            if player_choice == 1 or player_choice == 2:
-                return player_choice
-            if player_choice == 3:
-                print("Thanks for playing! See you next time.")
-                break
-        except ValueError:
-            print("Not a number! Please try again")
-
-def end_game():
-    return "Thank you for playing! See you next time."
-
 # ------------------------------------------------- MICROSERVICE -------------------------------------------------- #
 
 def check_txt_file_contents(file_path, str_to_check):
@@ -433,8 +438,8 @@ def game():
 
 def main():
     # Testing Monster Generator
-    random_number = run_microservice()
-    monster = monster_generator(random_number)
+    # random_number = run_microservice()
+    # monster = monster_generator(random_number)
 
     # Call monster and print what it is
     # print_monster(monster)
@@ -453,7 +458,7 @@ def main():
         # Player creation and statistics
         print_player(new_player)
         # print(new_player)
-        combat(new_player, monster)
+        # combat(new_player, monster)
         # reverse()
     else:
         print("Thank you for playing! See you next time. ")
