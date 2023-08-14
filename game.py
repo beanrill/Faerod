@@ -388,7 +388,7 @@ def run_microservice():
 # ------------------------------------------------- RUN GAME ------------------------------------------------- #
 def main():
     # Introduction and instructions
-    # intro()
+    intro()
 
     # Run Game
     if proceed_or_exit() == 2:
