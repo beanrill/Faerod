@@ -279,6 +279,7 @@ def check_combat_winner(curr_player, curr_monster, player_hp, monster_hp):
     Checks if player or monster won the combat.
 
     :param curr_player: a dictionary representing the current player's stats
+    :param curr_monster: a dictionary representing the current monster
     :param player_hp: an integer
     :param monster_hp: an integer
     :return: a print statement or none
