@@ -170,7 +170,7 @@ def instructions():
           "2) Choose your weapon based on the selections provided. Your weapon cannot be changed after starting the "
           "game \n"
           "3) Your HP level starts at 50 and can increase or decrease as you progress through the game. \n"
-          "4) The board is split into 9 squares, each round will prompt you to choose between squares 1-9."
+          "4) The board is split into 9 squares, each round will prompt you to choose between squares 1-9. \n"
           "5) You may go in any direction you choose within the limitations of the board and can revisit the same spot. "
           "more than once. If you land on a spot with a monster that you have previously fought, you may choose to "
           "fight it again.\n"
@@ -193,6 +193,7 @@ def movement(player_dict, monster_dict):
     else:
         player_dict['Location'] = number
         player_dict['HP'] += 10
+        print("\033[38;5;99mYou stumble upon a Winclamit fruit and take a bite.\033[00m\n\n\033[38;5;141mGain +10 HP.\033[00m ")
         print_player(player_dict)
 
 def monster_generator(number):
@@ -387,7 +388,7 @@ def run_microservice():
 # ------------------------------------------------- RUN GAME ------------------------------------------------- #
 def main():
     # Introduction and instructions
-    intro()
+    # intro()
 
     # Run Game
     if proceed_or_exit() == 2:
