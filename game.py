@@ -165,16 +165,16 @@ def intro_narrative():
 def instructions():
     print('\033[38;5;123m' + "You have entered the forrest of Faerod and are tasked with returning back to your realm\n"
           + '\033[00m')
-    print("Instructions: \n"
+    print("\033[38;5;12mInstructions: \n"
           "1) Choose your class based on the selections provided. Your class cannot be changed once chosen.\n"
           "2) Choose your weapon based on the selections provided. Your weapon cannot be changed after starting the "
-          "game \n"
+          "game. \n"
           "3) Your HP level starts at 50 and can increase or decrease as you progress through the game. \n"
           "4) The board is split into 9 squares, each round will prompt you to choose between squares 1-9. \n"
-          "5) You may go in any direction you choose within the limitations of the board and can revisit the same spot. "
-          "more than once. If you land on a spot with a monster that you have previously fought, you may choose to "
+          "5) You may go in any direction you choose within the limitations of the board and can revisit the same spot "
+          "more than once.\nIf you land on a spot with a monster that you have previously fought, you may choose to "
           "fight it again.\n"
-          "6) When choosing how to proceed at any point, enter the numbers corresponding to the choices provided.\n")
+          "6) When choosing how to proceed at any point, enter the numbers corresponding to the choices provided.\033[00m \n")
 
 def movement(player_dict, monster_dict):
     """
