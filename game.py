@@ -66,7 +66,7 @@ def choose_char():
     :return: Returns a string holding the player's character class
     """
     while True:
-        choice = int(input("\nChoose your class: \n 1 - Wizard \n 2 - Mage \n 3 - Sorcerer \n 4 - Knight \n"))
+        choice = int(input("\nChoose your class: \n 1 - Mage \n 2 - Rogue \n 3 - Ranger \n 4 - Knight \n"))
         if choice == 1 and validate_choice():
             return "Mage"
         elif choice == 2 and validate_choice():
@@ -270,13 +270,11 @@ def attack():
     monster_roll = random.randint(1, 25)
     while True:
         if player_roll > monster_roll:
-            print(f"Player rolls: {player_roll} | Monster rolls: {monster_roll}")
             return True
         else:
-            print(f"Player rolls: {player_roll} | Monster rolls: {monster_roll}")
             return False
 
-def check_combat_winner(curr_player, player_hp, monster_hp):
+def check_combat_winner(curr_player, curr_monster, player_hp, monster_hp):
     """
     Checks if player or monster won the combat.
 
@@ -291,7 +289,7 @@ def check_combat_winner(curr_player, player_hp, monster_hp):
         print("\033[38;5;154mGame over, you have been vanquished!\033[00m")
         end_game()
     elif monster_hp <= 0:
-        print("\033[38;5;199mCongratulations! You have defeated the monster!\033[00m")
+        print(f"\033[38;5;199mCongratulations! You have defeated the {curr_monster['Monster']}!\033[00m")
     else:
         return
 
@@ -322,16 +320,16 @@ def combat(curr_player, monster):
 
     while curr_player['HP'] > 0 and monster['HP'] > 0:
         if attack(): # Player hits monster
-            print(f"\033[38;5;155m{curr_player['Name']} strikes the {monster['Monster']}!\033[00m \n")
+            print(f"\033[38;5;155mYou strike the {monster['Monster']}!\033[00m \n")
             monster['HP'] -= 5
         else:
-            print(f"\033[38;5;196m{monster['Monster']} attacks {curr_player['Name']}!\033[00m \n")
+            print(f"\033[38;5;196mThe {monster['Monster']} attacks you!\033[00m \n")
             curr_player['HP'] -= 7
 
-        print(f"{curr_player['Name']}: {curr_player['HP']} | {monster['Monster']}: {monster['HP']} \n")
+        print(f"You: {curr_player['HP']} | {monster['Monster']}: {monster['HP']} \n")
 
         # Check if player or monster died
-        check_combat_winner(curr_player, curr_player['HP'], monster['HP'])
+        check_combat_winner(curr_player, monster, curr_player['HP'], monster['HP'])
 
     # Print updated stats of player
     combat_stats(curr_player, curr_player['HP'])
