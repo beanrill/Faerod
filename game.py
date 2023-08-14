@@ -68,11 +68,11 @@ def choose_char():
     while True:
         choice = int(input("\nChoose your class: \n 1 - Wizard \n 2 - Mage \n 3 - Sorcerer \n 4 - Knight \n"))
         if choice == 1 and validate_choice():
-            return "Wizard"
-        elif choice == 2 and validate_choice():
             return "Mage"
+        elif choice == 2 and validate_choice():
+            return "Rogue"
         elif choice == 3 and validate_choice():
-            return "Sorcerer"
+            return "Ranger"
         elif choice == 4 and validate_choice():
             return "Knight"
 
