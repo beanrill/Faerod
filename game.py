@@ -2,7 +2,6 @@ import time
 import random
 
 # ------------------------------------------------- ASCII ART ------------------------------------------------- #
-
 def intro_art():
     print(r"""
                    ,   ,
@@ -29,7 +28,6 @@ def intro_art():
         /` . `  ,  . ~ , \  `  ~  ,  .  ^  ,  ~  .  `  ,  ~  .  ^  ,  ~  .  `-,
 
                     """)
-
 
 def game_over():
     print(r"""         
@@ -109,7 +107,6 @@ def player(name, hp, char_class, weapon, location, status):
     """
     return {"Name": name, "HP": hp, "Class": char_class, "Weapon": weapon, "Location": location, "Status": status}
 
-
 def create_player():
     """
     Creates a player with class and weapon choices.
@@ -122,7 +119,6 @@ def create_player():
     weapon = choose_weapon()
     created_player = player(player_name, HP(), player_class, weapon, 0, "Alive")
     return created_player
-
 
 def print_player(character: dict):
     """
@@ -141,7 +137,6 @@ def print_player(character: dict):
                        f"Status: {character['Status']} \n" + '\033[00m')
 
 # ------------------------------------------------- GAME MECHANICS -------------------------------------------------- #
-
 def introduction():
     print('\033[38;5;123m' + "Welcome to Faerod! A single-user dungeon game where you journey through a magical world filled "
                        "with beasts, treasure, and fairies. \n" + '\033[00m')
@@ -252,6 +247,7 @@ def proceed_or_exit():
                 return start_stop
         except ValueError:
             print("Not a number! Please try again.")
+
 def intro():
     intro_art()
     introduction()
