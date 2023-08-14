@@ -312,7 +312,6 @@ def combat_stats(curr_player, curr_hp):
         curr_player['HP'] = curr_hp
     print_player(curr_player)
 
-
 def combat(curr_player, monster):
     """
     Combat between player and monster
@@ -341,7 +340,6 @@ def combat(curr_player, monster):
     combat_stats(curr_player, curr_player['HP'])
 
 # ------------------------------------------------- MICROSERVICE -------------------------------------------------- #
-
 def check_txt_file_contents(file_path, str_to_check):
     try:
         with open(file_path, 'r') as file:
