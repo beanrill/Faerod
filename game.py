@@ -31,36 +31,13 @@ def intro_art():
                     """)
 
 
-def mushroom():
-    print(r"""
-                  .
-                ('
-                '|
-                |'
-               [::]
-               [::]   _......_
-               [::].-'      _.-`.
-               [:.'    .-. '-._.-`.
-               [/ /\   |  \        `-..
-               / / |   `-.'      .-.   `-.
-              /  `-'            (   `.    `.
-             |           /\      `-._/      \
-             '    .'\   /  `.           _.-'|
-            /    /  /   \_.-'        _.':;:/
-          .'     \_/             _.-':;_.-'
-         /   .-.             _.-' \;.-'
-        /   (   \       _..-'     |
-        \    `._/  _..-'    .--.  |
-         `-.....-'/  _ _  .'    '.|
-                  | |_|_| |      | \  (o)
-             (o)  | |_|_| |      | | (\'/)
-            (\'/)/  ''''' |     o|  \;:;
-             :;  |        |      |  |/)
-         LGB  ;: `-.._    /__..--'\.' ;:
-                  :;  `--' :;   :;
+def game_over():
+    print(r"""         
+       ___   ___  ___  ___  ____      ___   __ __  ____ ____ 
+      // \\ // \\ ||\\//|| ||        // \\  || || ||    || \\
+     (( ___ ||=|| || \/ || ||==     ((   )) \\ // ||==  ||_//
+      \\_|| || || ||    || ||___     \\_//   \V/  ||___ || \\                                                    
        """)
-
-
 
 # ------------------------------------------------- ENEMIES ------------------------------------------------- #
 
@@ -162,6 +139,7 @@ def print_player(character: dict):
                        f"Weapon: {character['Weapon']} \n"
                        f"Location: {character['Location']} \n"
                        f"Status: {character['Status']} \n" + '\033[00m')
+
 # ------------------------------------------------- GAME MECHANICS -------------------------------------------------- #
 
 def introduction():
@@ -202,6 +180,7 @@ def instructions():
           "more than once. If you land on a spot with a monster that you have previously fought, you may choose to "
           "fight it again.\n"
           "6) When choosing how to proceed at any point, enter the numbers corresponding to the choices provided.\n")
+
 def movement(player_dict, monster_dict):
     """
     Movement of player across the board. Selection of number between 1-9 to either fight monster or earn HP increase.
@@ -219,7 +198,7 @@ def movement(player_dict, monster_dict):
     else:
         player_dict['Location'] = number
         player_dict['HP'] += 10
-        print(player_dict)
+        print_player(player_dict)
 
 def monster_generator(number):
     """
@@ -273,13 +252,17 @@ def proceed_or_exit():
                 return start_stop
         except ValueError:
             print("Not a number! Please try again.")
+def intro():
+    intro_art()
+    introduction()
+    intro_narrative()
+    instructions()
 
 def end_game():
+    game_over()
     print("\033[38;5;183mThank you for playing! See you next time.\033[00m")
 
 # ------------------------------------------------- COMBAT -------------------------------------------------- #
-
-
 def attack():
     """
     Determines who attacks who.
@@ -308,10 +291,10 @@ def check_combat_winner(curr_player, player_hp, monster_hp):
     if player_hp <= 0:
         # Game over
         curr_player['Status'] = "Dead"
-        print("Game over, you have been vanquished!")
+        print("\033[38;5;154mGame over, you have been vanquished!\033[00m")
         end_game()
     elif monster_hp <= 0:
-        print("Congratulations! You have defeated the monster!")
+        print("\033[38;5;199mCongratulations! You have defeated the monster!\033[00m")
     else:
         return
 
@@ -338,29 +321,24 @@ def combat(curr_player, monster):
     :param monster: a dictionary
     :return: none
     """
-    player_hp = curr_player['HP']
-    monster_hp = monster['HP']
-    player_name = curr_player['Name']
-    monster_name = monster['Monster']
+    print(f"\n\033[38;5;43mBEGIN COMBAT\033[00m \n"
+          f"\033[38;5;155m{curr_player['Name']}\033[00m fights the \033[38;5;160m{monster['Monster']}!\033[00m \n")
 
-    print("\n\033[38;5;43mBEGIN COMBAT\033[00m \n")
-    print(f"\033[38;5;155m{player_name}\033[00m fights the \033[38;5;160m{monster_name}!\033[00m \n")
-
-    while player_hp > 0 and monster_hp > 0:
+    while curr_player['HP'] > 0 and monster['HP'] > 0:
         if attack(): # Player hits monster
-            print(f"\033[38;5;155m{player_name} strikes the {monster_name}!\033[00m \n")
-            monster_hp -= 5
+            print(f"\033[38;5;155m{curr_player['Name']} strikes the {monster['Monster']}!\033[00m \n")
+            monster['HP'] -= 5
         else:
-            print(f"\033[38;5;196m{monster_name} attacks {player_name}!\033[00m \n")
-            player_hp -= 7
+            print(f"\033[38;5;196m{monster['Monster']} attacks {curr_player['Name']}!\033[00m \n")
+            curr_player['HP'] -= 7
 
-        print(f"{curr_player['Name']}: {player_hp} | {monster['Monster']}: {monster_hp} \n")
+        print(f"{curr_player['Name']}: {curr_player['HP']} | {monster['Monster']}: {monster['HP']} \n")
 
         # Check if player or monster died
-        check_combat_winner(curr_player, player_hp, monster_hp)
+        check_combat_winner(curr_player, curr_player['HP'], monster['HP'])
 
     # Print updated stats of player
-    combat_stats(curr_player, player_hp)
+    combat_stats(curr_player, curr_player['HP'])
 
 # ------------------------------------------------- MICROSERVICE -------------------------------------------------- #
 
@@ -368,7 +346,6 @@ def check_txt_file_contents(file_path, str_to_check):
     try:
         with open(file_path, 'r') as file:
             file_content = file.read()
-
             if file_content.strip() == str_to_check:
                 return True
             else:
@@ -401,20 +378,14 @@ def read_from_txt_file(file_path):
 
 def run_microservice():
     # Write the request over
-    # print("Writing 'request' to rng_pipe.txt")
     write_to_txt_file("rng_pipe.txt", "request")
 
     while (check_txt_file_contents("rng_pipe.txt", "request") or
            check_txt_file_contents("rng_pipe.txt", "")):
-        # print("Waiting 1 second before checking the pipe...")
         time.sleep(1)
 
     pipe_contents = read_from_txt_file("rng_pipe.txt")
     rng_num = int(pipe_contents)
-
-    # Now you can use rng_num for your service!
-    # print(f"Received {rng_num} from the rng_pipe.txt file")
-    # print("Goodbye!")
 
     # Return the rng_num to use for monster generator
     return rng_num
@@ -422,10 +393,7 @@ def run_microservice():
 # ------------------------------------------------- RUN GAME ------------------------------------------------- #
 def main():
     # Introduction and instructions
-    # intro_art()
-    # introduction()
-    # intro_narrative()
-    # instructions()
+    intro()
 
     # Run Game
     if proceed_or_exit() == 2:
