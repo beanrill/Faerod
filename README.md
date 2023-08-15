@@ -12,7 +12,7 @@ In a second terminal window run `python game.py`
 
 Enjoy!
 
-## Gameplay Demo
+## Demo
 ![Faerod-Intro](https://github.com/beanrill/Faerod/assets/47017874/0777a539-2f79-4df5-9a1a-5dcd328c07ea)
 
 Choose your class and weapons:
