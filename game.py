@@ -355,7 +355,6 @@ def write_to_txt_file(file_path, str_to_write):
     try:
         with open(file_path, 'w') as file:
             file.write(str_to_write)
-        # print("File written successfully.")
     except Exception as e:
         print(f"Error occurred while writing to the file: {e}")
 
